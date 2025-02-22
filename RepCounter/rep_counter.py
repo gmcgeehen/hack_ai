@@ -2,6 +2,7 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import sys
 
 
 #Setup
@@ -26,7 +27,7 @@ while cap.isOpened():
 
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-
+    #if sys.argv[1] == "pushups"
     #Squat functionality need to add command line arguments for it to pass within this function
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
