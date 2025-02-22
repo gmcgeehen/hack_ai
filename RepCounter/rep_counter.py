@@ -30,7 +30,7 @@ while cap.isOpened():
     #Squat functionality need to add command line arguments for it to pass within this function
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
+        landmarks = results.pose_landmarks.landmark
         #Get points for comparisons (we want the y coordianted because thats the plane that matters)
         right_hip_y = landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y
         left_hip_y = landmarks[mp_pose.PoseLandmark.LEFT_HIP].y
