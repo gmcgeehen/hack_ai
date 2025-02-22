@@ -60,6 +60,8 @@ while cap.isOpened():
         left_elbow_y = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW].y
         right_shoulder_y = landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].y 
         right_elbow_y = landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW].y
+        right_ankle_y = landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE].y
+        left_ankle_y = landmarks[mp_pose.PoseLandmark.LEFT_ANKLE].y
 
 
         #Logic for squats
@@ -88,14 +90,33 @@ while cap.isOpened():
 
             
         #Logic for lunges
-        # elif sys.argv[1] == "lunges":
-        #     pass
+        elif exercise_type == "lunges":
+            if left_knee_y + right_knee_y > left_hip_y + right_hip_y - threshold and currentpos == "up":
+                currentpos = "down"
+            elif left_knee_y + right_knee_y < left_hip_y + right_hip_y - threshold and currentpos == "down":
+                currentpos = "up"
+                count += 1
+
+
         #Logic for planks
-        # elif exercise_type == "planks":
-        #     pass
+        elif exercise_type == "planks":
+            if abs(left_shoulder_y - left_hip_y) < threshold and abs(left_hip_y - left_knee_y) < threshold:
+                if not in_position:
+                    in_position = True
+                    start_time = time.time()
+                else:
+                    if in_position:
+                        in_position = False
+                        duration = time.time() - start_time
+         
         #Logic for legaises
-        # elif exercise_type == "legraises":
-        #     pass
+        elif exercise_type == "legraises":
+            if left_ankle_y + right_ankle_y < left_hip_y + right_hip_y - threshold and currentpos == "down":
+                currentpos = "up"
+            elif left_ankle_y + right_ankle_y > left_hip_y + right_hip_y - threshold and currentpos == "up":
+                currentpos = "down"
+                count += 1
+
 
 
 
