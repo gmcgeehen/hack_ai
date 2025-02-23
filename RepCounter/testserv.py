@@ -4,6 +4,7 @@ import mediapipe as mp
 import numpy as np
 import sys
 
+
 # #Importing a tts so that it can count your reps for you actively!
 import pyttsx3
 
@@ -71,11 +72,26 @@ while cap.isOpened():
 
         #Logic for squats
         if exercise_type == "squats":
-            if left_hip_y + right_hip_y > left_knee_y + right_knee_y - threshold and currentpos == "up":
-                currentpos = "down"
-            elif left_hip_y +right_hip_y < left_knee_y + right_knee_y - threshold and currentpos == "down":
-                currentpos = "up"
+            # Check if the person is at or below the required depth (hip below knee)
+            if (left_hip_y + right_hip_y) > (left_knee_y + right_knee_y) - threshold and currentpos == "up":
+                currentpos = "down"  # Move to down position
+            elif (left_hip_y + right_hip_y) < (left_knee_y + right_knee_y) - threshold and currentpos == "down":
+                currentpos = "up"  # Move to up position
                 count += 1
+
+                # Check if depth is sufficient (hip below knee)
+                if (left_hip_y + right_hip_y) < (left_knee_y + right_knee_y) - threshold:
+                    # Good depth, count as a full squat
+                    print("Good depth!")
+                else:
+                    # Not enough depth, provide feedback
+                    print("Need to go lower for full depth!")
+            
+            # Display feedback for squat depth on the screen
+            if (left_hip_y + right_hip_y) < (left_knee_y + right_knee_y) - threshold:
+                cv2.putText(frame, "Good Squat Depth", (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            else:
+                cv2.putText(frame, "Need Deeper Squat!", (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
         
         #Logic for pushups
         elif exercise_type == "pushups":
@@ -149,9 +165,3 @@ while cap.isOpened():
 
 cap.release()
 cv2.destroyAllWindows()
-
-
-
-
-
-    
