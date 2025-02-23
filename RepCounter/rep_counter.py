@@ -164,7 +164,7 @@ while cap.isOpened():
 
     #Message telling the user how to quit the program
     cv2.putText(frame, "Once you are done recording your reps, press Q to quit", (20, 20), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
     #Name of the frame
     cv2.imshow("Pose Detection", frame)
