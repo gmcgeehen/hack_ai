@@ -17,7 +17,7 @@ voices = engine.getProperty("voices")
 
 #Set the voice
 if voices:
-    engine.setProperty("voice", voices[120].id)
+    engine.setProperty("voice", voices[0].id)
 
 
 #Importing a time for planks
@@ -69,13 +69,14 @@ while cap.isOpened():
 
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     # Save the current frame to the video file
-    out.write(frame)  # Writing the frame to file
+
 
    
     #Squat functionality need to add command line arguments for it to pass within this function
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         landmarks = results.pose_landmarks.landmark
+        out.write(frame)  # Writing the frame to file
         #Get points for comparisons (we want the y coordianted because thats the plane that matters)
         right_hip_y = landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y
         left_hip_y = landmarks[mp_pose.PoseLandmark.LEFT_HIP].y
@@ -187,8 +188,8 @@ while cap.isOpened():
     #Display the count and the quit message
     cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.putText(frame, "Once you are done recording your reps, press Q to quit", (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-
     cv2.imshow("Pose Detection", frame)
+    
     if cv2.waitKey(10) & 0xFF == ord("q"):
         break
 
@@ -200,5 +201,4 @@ cv2.destroyAllWindows()
 
 
 
-
-    
+ 
