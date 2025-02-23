@@ -4,8 +4,22 @@ import mediapipe as mp
 import numpy as np
 import sys
 
+
 # #Importing a tts so that it can count your reps for you actively!
 import pyttsx3
+# Setup voice engine
+engine = pyttsx3.init()
+engine.setProperty("rate", 150)  # Speed of speech
+engine.setProperty("volume", 1.0)  # Volume (0.0 to 1.0)
+voices = engine.getProperty("voices")
+
+#Set the voice
+if voices:
+    engine.setProperty("voice", voices[120].id)
+
+#  Speak some text
+# engine.say("Hello Grant, this is a test of the text-to-speech engine.")
+# engine.runAndWait()
 
 #Importing a time for planks and maybe also just having an active timer for workouts!
 import time
@@ -40,6 +54,8 @@ threshold = 0.1  #Small threshold to prevent errors
 in_position = False
 start_time = 0
 elapsed_time = 0  # To store the elapsed time
+
+
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -76,6 +92,8 @@ while cap.isOpened():
             elif left_hip_y +right_hip_y < left_knee_y + right_knee_y - threshold and currentpos == "down":
                 currentpos = "up"
                 count += 1
+                engine.say(f"Squat {count} complete!") 
+                engine.runAndWait()
         
         #Logic for pushups
         elif exercise_type == "pushups":
@@ -84,6 +102,8 @@ while cap.isOpened():
             elif left_shoulder_y + right_shoulder_y < left_elbow_y + right_elbow_y - threshold and currentpos == "down":
                 currentpos = "up"
                 count += 1
+                engine.say(f"Pushup {count} complete!") 
+                engine.runAndWait()
 
         #Logic for pullups
         elif exercise_type == "pullups":
@@ -92,6 +112,8 @@ while cap.isOpened():
              elif left_shoulder_y + right_shoulder_y > left_elbow_y + right_elbow_y - threshold and currentpos == "up":
                 currentpos = "down"
                 count += 1
+                engine.say(f"Pullup {count} complete!") 
+                engine.runAndWait()
 
             
         #Logic for lunges
@@ -101,6 +123,8 @@ while cap.isOpened():
             elif left_knee_y + right_knee_y < left_hip_y + right_hip_y - threshold and currentpos == "down":
                 currentpos = "up"
                 count += 1
+                engine.say(f"Lunge {count} complete!") 
+                engine.runAndWait()
 
 
         #Logic for planks
@@ -132,11 +156,8 @@ while cap.isOpened():
             elif left_ankle_y + right_ankle_y > left_hip_y + right_hip_y - threshold and currentpos == "up":
                 currentpos = "down"
                 count += 1
-
-
-
-
-
+                engine.say(f"Legraise {count} complete!") 
+                engine.runAndWait()
 
      
     #Display the count and the quit message
