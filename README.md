@@ -19,6 +19,10 @@ _Some problems we faced while working on this project was getting the TTS to wor
 ## Future Improvements  
 _Some things that we did not get around to doing during this hackathon was giving real-time feedback to the user about how their excercises were. Like say for a pushup, we could take a range at the angle that they elbow and shoulder had and depending on how close it is to a proper rep, we could give it a rating. With that rating this could almost be like a coach for some people and it could help people record themselves with their form and then look back at it with a computer vision aspect to it that takes precise measurements and checks everything for you. One final thing that we would like to do is add more exercises!_  
 
+## Current Known Bugs
+- _The program sometimes gets overloaded and can crash_
+- _MacOS users may have probelms opening their mp4 files natively._
+
 ## Acknowledgments  
 - Special thanks to the **Artificial Intelligence Club at OSU** for organizing the event.  
 - Shoutout to our mentors and fellow participants for their support and insights!  

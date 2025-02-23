@@ -7,21 +7,22 @@ import pyttsx3
 import time
 import queue
 
-# Create a queue for TTS messages
+#Create a queue for TTS messages
 tts_queue = queue.Queue()
 
-# Setup voice engine
+#Setup voice engine
 engine = pyttsx3.init()
 engine.setProperty("rate", 300)
 engine.setProperty("volume", 0.75)
 voices = engine.getProperty("voices")
 
+#Set voice to 0 because every device should work then
 if voices:
     engine.setProperty("voice", voices[0].id)
 
 is_running = True
 
-# TTS worker function that runs in a separate thread
+#TTS worker function that runs in a separate thread
 def tts_worker():
     while is_running:
         message = tts_queue.get()
@@ -31,18 +32,19 @@ def tts_worker():
         engine.runAndWait()
         tts_queue.task_done()
 
-# Start TTS thread
+#Start TTS thread
 tts_thread = threading.Thread(target=tts_worker, daemon=True)
 tts_thread.start()
 
-# Check command line arguments
+#Check command line arguments
 if len(sys.argv) < 2:
     print("Need more than 1 command line argument! Add in what exercise you would like to record. i.e python3 rep_counter.py squats")
     sys.exit(1)
 
+#Grab the exercise type to comapre later
 exercise_type = sys.argv[1]
 
-# Setup
+#Setup
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
@@ -52,7 +54,7 @@ cap.set(cv2.CAP_PROP_FPS, 20)
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('workout_session.mp4', fourcc, 20.0, (640, 480))
 
-# Initialize variables
+#Initialize variables
 count = 0
 currentpos = "up"
 threshold = 0.1
@@ -60,6 +62,8 @@ in_position = False
 start_time = 0
 elapsed_time = 0
 
+
+#Main program loop
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -73,7 +77,7 @@ while cap.isOpened():
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         landmarks = results.pose_landmarks.landmark
 
-        # Get landmarks
+        #Get landmarks
         right_hip_y = landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y
         left_hip_y = landmarks[mp_pose.PoseLandmark.LEFT_HIP].y
         right_knee_y = landmarks[mp_pose.PoseLandmark.RIGHT_KNEE].y
@@ -92,6 +96,7 @@ while cap.isOpened():
         left_shoulder_x = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].x
 
         # Exercise detection logic
+        #Squats
         if exercise_type == "squats":
             if left_hip_y + right_hip_y > left_knee_y + right_knee_y - threshold and currentpos == "up":
                 currentpos = "down"
@@ -100,7 +105,7 @@ while cap.isOpened():
                 count += 1
                 tts_queue.put(f"Squat {count} complete!")
 
-
+        #Pushups
         elif exercise_type == "pushups":
             if left_shoulder_y + right_shoulder_y > left_elbow_y + right_elbow_y - threshold and currentpos == "up":
                 currentpos = "down"
@@ -109,7 +114,7 @@ while cap.isOpened():
                 count += 1
                 tts_queue.put(f"Pushup {count} complete!")
 
-
+        #Pullups
         elif exercise_type == "pullups":
             if left_shoulder_y + right_shoulder_y < left_elbow_y + right_elbow_y - threshold and currentpos == "down":
                 currentpos = "up"
@@ -118,7 +123,7 @@ while cap.isOpened():
                 count += 1
                 tts_queue.put(f"Pullup {count} complete!")
 
-
+        #Planks
         elif exercise_type == "planks":
             if abs(left_shoulder_y - left_hip_y) < threshold and abs(left_hip_y - left_knee_y) < threshold:
                 if not in_position:
@@ -136,6 +141,7 @@ while cap.isOpened():
             cv2.putText(frame, f"Plank Time: {int(elapsed_time)} seconds", (50, 100), 
                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
+        #Legraises
         elif exercise_type == "legraises":
             if left_shoulder_x + right_shoulder_x < right_hip_x + left_hip_x:
                 if left_ankle_x + right_ankle_x < left_hip_x + right_hip_x - threshold and currentpos == "down":
@@ -155,17 +161,19 @@ while cap.isOpened():
     cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)   
     out.write(frame)
 
+    #Message telling the user how to quit the program
     cv2.putText(frame, "Once you are done recording your reps, press Q to quit", (20, 20), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
+    #Name of the frame
     cv2.imshow("Pose Detection", frame)
     if cv2.waitKey(10) & 0xFF == ord("q"):
         break
 
-# Cleanup
+#Cleanup
 tts_queue.put(None)  # Signal the TTS thread to stop
 tts_thread.join()    # Wait for the TTS thread to finish
-is_running = False
+is_running = False   #Set flag to false
 cap.release()
 out.release()
 cv2.destroyAllWindows()
