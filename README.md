@@ -6,7 +6,7 @@ Hello! We are **Grant McGeehen** and **Peter Erlenbusch**, and we participated i
 I, **Grant McGeehen**, am a **Computer and Information Science (CIS) major** and my partner, Peter Erlenbusch is an **Electrical and Computer Engineering (ECE) major**  at OSU. We both have strong interest in **artificial intelligence** and its vast capabilities.  
 
 ## Our Project  
-_Have you ever been working out and forgot to count_  
+_Have you ever been working out and wondered how your form was and would like to go back and take a look at what you have done, or look at it while working out with Well here is our project for HACK/AI 2025. We created a project that uses computer vision and arificial intelligence to create something that watches your form via webcam and counts your reps for you. (Look in futures section for more functionalities that we will be adding in the future)._  
 
 ## Technologies Used  
 - **Programming Languages**: _Python_
@@ -17,7 +17,7 @@ _Have you ever been working out and forgot to count_
 _Some problems we faced while working on this project was getting the TTS to work as well as trying to make sure that all of the angles were correct and what not when checking for complete reps being completed. Planks and legraises were the two more difficult ones to wrap out heads around on how to measure them._  
 
 ## Future Improvements  
-_Some things that we did not get around to doing during this hackathon was giving real-time feedback to the user about how their excercises were. Like say for a pushup, we could take a range at the angle that they elbow and shoulder had and depending on how close it is to a proper rep, we could give it a rating. With that rating this could almost be like a coach for some people and it could help people record themselves with their form and then lookback at it with a computer vision aspect to it that takes precise measurements and checks everything for you._  
+_Some things that we did not get around to doing during this hackathon was giving real-time feedback to the user about how their excercises were. Like say for a pushup, we could take a range at the angle that they elbow and shoulder had and depending on how close it is to a proper rep, we could give it a rating. With that rating this could almost be like a coach for some people and it could help people record themselves with their form and then lookback at it with a computer vision aspect to it that takes precise measurements and checks everything for you. Another feature that we were unable to get fully working was running the tts within a separate thread so that we can have the camera not delay within counting reps. One final feature would be that within the recordings that we save locally, we would like for that recording to save the format that the video has natively, i.e shows reps, and then the feedback as well._  
 
 ## Acknowledgments  
 - Special thanks to the **Artificial Intelligence Club at OSU** for organizing the event.  

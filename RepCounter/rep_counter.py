@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import sys
+import threading
 
 
 # #Importing a tts so that it can count your reps for you actively!
