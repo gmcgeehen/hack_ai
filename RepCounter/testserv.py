@@ -12,21 +12,24 @@ tts_queue = queue.Queue()
 
 # Setup voice engine
 engine = pyttsx3.init()
-engine.setProperty("rate", 150)
+engine.setProperty("rate", 300)
 engine.setProperty("volume", 0.75)
 voices = engine.getProperty("voices")
 
 if voices:
-    engine.setProperty("voice", voices[120].id)
+    engine.setProperty("voice", voices[0].id)
+
+is_running = True
 
 # TTS worker function that runs in a separate thread
 def tts_worker():
-    x = True
-    while x:
+    while is_running:
         message = tts_queue.get()
+        if message is None:
+            break
         engine.say(message)
         engine.runAndWait()
-        #tts_queue.task_done()
+        tts_queue.task_done()
 
 # Start TTS thread
 tts_thread = threading.Thread(target=tts_worker, daemon=True)
@@ -45,6 +48,7 @@ pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FPS, 20)
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('workout_session.mp4', fourcc, 20.0, (640, 480))
 
@@ -64,12 +68,11 @@ while cap.isOpened():
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(frame)
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-    out.write(frame)
 
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         landmarks = results.pose_landmarks.landmark
-        
+
         # Get landmarks
         right_hip_y = landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y
         left_hip_y = landmarks[mp_pose.PoseLandmark.LEFT_HIP].y
@@ -157,6 +160,9 @@ while cap.isOpened():
                     tts_queue.put(f"Legraise {count} complete!")
 
     cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    
+    out.write(frame)
+
     cv2.putText(frame, "Once you are done recording your reps, press Q to quit", (20, 20), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
@@ -167,6 +173,7 @@ while cap.isOpened():
 # Cleanup
 tts_queue.put(None)  # Signal the TTS thread to stop
 tts_thread.join()    # Wait for the TTS thread to finish
+is_running = False
 cap.release()
 out.release()
 cv2.destroyAllWindows()
