@@ -3,7 +3,7 @@
 ## Introduction  
 Hello! We are **Grant McGeehen** and **Peter Erlenbusch**, and we participated in **HACK/AI**, a hackathon hosted by the **Artificial Intelligence Club at The Ohio State University (OSU)**.  
 
-I, **Grant McGeehen**, am a **Computer and Information Science (CIS) major** and my partner, Peter Erlenbusch is an **Electrical and Computer Engineering (ECE) major**  at OSU. We both have strong interest in **artificial intelligence** and its vast capabilities.  
+I, **Grant McGeehen**, am a **Computer and Information Science (CIS) major** and my partner, **Peter Erlenbusch**, is an **Electrical and Computer Engineering (ECE) major**  at OSU. We both have strong interest in **artificial intelligence** and its vast capabilities.  
 
 ## Our Project  
 _Have you ever been working out and wondered how your form was and would like to go back and take a look at what you have done, or look at it while working out with Well here is our project for HACK/AI 2025. We created a project that uses computer vision and arificial intelligence to create something that watches your form via webcam and counts your reps for you. (Look in futures section for more functionalities that we will be adding in the future)._  
