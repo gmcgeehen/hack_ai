@@ -10,7 +10,7 @@ _Have you ever been working out and wondered how your form was and would like to
 
 ## Technologies Used  
 - **Programming Languages**: _Python_
-- **Frameworks/Libraries**: _OpenCV, Mediapipe, Numpy, Pyttsx3_  
+- **Frameworks/Libraries**: _OpenCV, Mediapipe, Tensorflow Lite, Numpy, Pyttsx3_  
 - **APIs/Tools**: _None as of now._  
 
 ## Challenges We Faced  

@@ -12,7 +12,7 @@ tts_queue = queue.Queue()
 
 #Setup voice engine
 engine = pyttsx3.init()
-engine.setProperty("rate", 300)
+engine.setProperty("rate", 200)
 engine.setProperty("volume", 0.75)
 voices = engine.getProperty("voices")
 
@@ -53,7 +53,8 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FPS, 20)
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter('workout_session.mp4', fourcc, 20.0, (640, 480))
-
+cv2.namedWindow("Pose Detection", cv2.WINDOW_NORMAL)  # Allow resizing
+cv2.resizeWindow("Pose Detection", 640, 480)  # Set initial window size
 #Initialize variables
 count = 0
 currentpos = "up"
@@ -72,7 +73,7 @@ while cap.isOpened():
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(frame)
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-
+    
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         landmarks = results.pose_landmarks.landmark
