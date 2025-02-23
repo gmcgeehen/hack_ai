@@ -99,7 +99,7 @@ while cap.isOpened():
                 currentpos = "up"
                 count += 1
                 tts_queue.put(f"Squat {count} complete!")
-            cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
 
         elif exercise_type == "pushups":
             if left_shoulder_y + right_shoulder_y > left_elbow_y + right_elbow_y - threshold and currentpos == "up":
@@ -108,7 +108,7 @@ while cap.isOpened():
                 currentpos = "up"
                 count += 1
                 tts_queue.put(f"Pushup {count} complete!")
-            cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
 
         elif exercise_type == "pullups":
             if left_shoulder_y + right_shoulder_y < left_elbow_y + right_elbow_y - threshold and currentpos == "down":
@@ -117,7 +117,7 @@ while cap.isOpened():
                 currentpos = "down"
                 count += 1
                 tts_queue.put(f"Pullup {count} complete!")
-            cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
 
         elif exercise_type == "planks":
             if abs(left_shoulder_y - left_hip_y) < threshold and abs(left_hip_y - left_knee_y) < threshold:
@@ -151,8 +151,8 @@ while cap.isOpened():
                     currentpos = "down"
                     count += 1
                     tts_queue.put(f"Legraise {count} complete!")
-            cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-   
+
+    cv2.putText(frame, f"Reps: {count}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)   
     out.write(frame)
 
     cv2.putText(frame, "Once you are done recording your reps, press Q to quit", (20, 20), 
