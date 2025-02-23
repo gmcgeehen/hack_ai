@@ -14,10 +14,10 @@ _Have you ever been working out and wondered how your form was and would like to
 - **APIs/Tools**: _None as of now._  
 
 ## Challenges We Faced  
-_Some problems we faced while working on this project was getting the TTS to work as well as trying to make sure that all of the angles were correct and what not when checking for complete reps being completed. Planks and legraises were the two more difficult ones to wrap out heads around on how to measure them._  
+_Some problems we faced while working on this project was getting the TTS to work within a separate thread as well as trying to make sure that all of the angles were correct and what not when checking for complete reps being completed. Planks and legraises were the two more difficult ones to wrap our heads around on how to measure them._  
 
 ## Future Improvements  
-_Some things that we did not get around to doing during this hackathon was giving real-time feedback to the user about how their excercises were. Like say for a pushup, we could take a range at the angle that they elbow and shoulder had and depending on how close it is to a proper rep, we could give it a rating. With that rating this could almost be like a coach for some people and it could help people record themselves with their form and then lookback at it with a computer vision aspect to it that takes precise measurements and checks everything for you. Another feature that we were unable to get fully working was running the tts within a separate thread so that we can have the camera not delay within counting reps. One final feature would be that within the recordings that we save locally, we would like for that recording to save the format that the video has natively, i.e shows reps, and then the feedback as well._  
+_Some things that we did not get around to doing during this hackathon was giving real-time feedback to the user about how their excercises were. Like say for a pushup, we could take a range at the angle that they elbow and shoulder had and depending on how close it is to a proper rep, we could give it a rating. With that rating this could almost be like a coach for some people and it could help people record themselves with their form and then look back at it with a computer vision aspect to it that takes precise measurements and checks everything for you. One final thing that we would like to do is add more exercises!_  
 
 ## Acknowledgments  
 - Special thanks to the **Artificial Intelligence Club at OSU** for organizing the event.  
