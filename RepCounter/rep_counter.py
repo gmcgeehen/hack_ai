@@ -107,8 +107,6 @@ while cap.isOpened():
                 currentpos = "up"
                 count += 1
                 tts_queue.put(f"Pushup {count} complete!")
-                
-
 
         elif exercise_type == "pullups":
             if left_shoulder_y + right_shoulder_y < left_elbow_y + right_elbow_y - threshold and currentpos == "down":
@@ -117,14 +115,6 @@ while cap.isOpened():
                 currentpos = "down"
                 count += 1
                 tts_queue.put(f"Pullup {count} complete!")
-
-        elif exercise_type == "lunges":
-            if left_knee_y + right_knee_y > left_hip_y + right_hip_y - threshold and currentpos == "up":
-                currentpos = "down"
-            elif left_knee_y + right_knee_y < left_hip_y + right_hip_y - threshold and currentpos == "down":
-                currentpos = "up"
-                count += 1
-                tts_queue.put(f"Lunge {count} complete!")
 
         elif exercise_type == "planks":
             if abs(left_shoulder_y - left_hip_y) < threshold and abs(left_hip_y - left_knee_y) < threshold:
